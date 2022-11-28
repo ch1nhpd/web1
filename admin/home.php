@@ -53,8 +53,8 @@ include('./action/home.php');
                         echo '
                             <tr>
                                 <td>' . $row['id'] . '</td>
-                                <td>' . $row['fullname'] . '</td>
-                                <td>' . $row['username'] . '</td>
+                                <td>' . htmlspecialchars($row['fullname'], ENT_QUOTES, 'UTF-8'). '</td>
+                                <td>' . htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') . '</td>
                                 <td>
                                     <button type="button" class="btn btn-outline-secondary" onclick="location.href=\'./edit_user.php?id=' . $row['id'] . '\'" >Edit</button>
                                     <button type="button" class="btn btn-outline-danger" onclick="location.href=\'./action/del_user.php?id=' . $row['id'] . '\'">Del</button>
