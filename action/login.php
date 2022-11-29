@@ -1,6 +1,7 @@
 <?php
 include('./connect.php');
 session_start();
+session_regenerate_id();
 $username = $_POST['username'];
 $password = md5($_POST['password']); 
 
