@@ -6,14 +6,14 @@ if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $title = $_POST['title'];
     $content = $_POST['content'];
-    $result = mysqli_query($con, "SELECT id FROM user WHERE username='$username'");
-    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    if (count($row) == 1) {
+    $stmt = $con->prepare("SELECT id FROM user WHERE username=?");
+    $stmt->execute([$username]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($row) {
         $id = $row['id'];
-        $query = "INSERT into `status` (content, title, user_id)
-                     VALUES ('$content'" . ", '$title'" . ", $id)";
-
-        mysqli_query($con, $query);
+        $stmt = $con->prepare("INSERT into `status` (content, title, user_id)
+        VALUES (?,?,?)");
+        $stmt->execute([$content,$title,$id]);  
         echo "<script>
                 alert('Success!');
                 window.location.href='../home.php';

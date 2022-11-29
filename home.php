@@ -48,7 +48,7 @@ include('./action/home.php');
 
                 <ul class="timeline">
                     <?php
-                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    foreach($stmt as $row) {
                         echo '
                         <li>
                             <div class="timeline-icon">

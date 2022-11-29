@@ -2,9 +2,10 @@
     include('action/auth.php');
     include(__DIR__ . '/../action/connect.php');
     $id = $_GET['id'];
-    $sql = "SELECT username, fullname from user where id = $id";
-    $result = mysqli_query($con, $sql);
-    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    $sql = "SELECT username, fullname from user where id = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->execute([$id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 

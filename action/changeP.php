@@ -5,10 +5,12 @@ if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $currentPass = md5($_POST['currentPass']);
     $password = md5($_POST['newPassword']);
-    $result = mysqli_query($con, "SELECT password FROM user WHERE username='$username'");
-    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    $stmt = $con->prepare("SELECT password FROM user WHERE username=?");
+    $stmt->execute([$username]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($currentPass === $row['password']) {
-        mysqli_query($con, "UPDATE user SET password = '$password'  where username = '$username';");
+        $stmt = $con->prepare("UPDATE user SET password = ?  where username = ?;");
+        $stmt->execute([$password,$username]);
         echo "<script>
                 alert('Success!');
                 window.location.href='../home.php';

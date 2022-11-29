@@ -49,7 +49,7 @@ include('./action/home.php');
                 </thead>
                 <tbody id="mytable">
                     <?php
-                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    foreach($stmt as $row) {
                         echo '
                             <tr>
                                 <td>' . $row['id'] . '</td>
