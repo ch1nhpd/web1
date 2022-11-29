@@ -1,7 +1,8 @@
 <?php
 include('./connect.php');
 include(__DIR__ . '/../util/validate.php');
-if (isset($_POST['username'])) {
+session_start();
+if (isset($_POST['username']) && $_POST['captcha'] && $_POST['captcha']===$_SESSION['captcha']) {
     if (!valid_password($_POST['password'])){
         echo "
         <script>
@@ -32,5 +33,13 @@ if (isset($_POST['username'])) {
                   </div>";
     }
 } else {
+    echo "
+        <script>
+            alert('Captcha error!!');
+            window.location.href='../register.php';
+        </script>;
+        ";
+        exit;
 }
+unset($_SESSION['captcha']);
 ?>
