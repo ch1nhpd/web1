@@ -2,7 +2,7 @@
 include('./connect.php');
 // include('./auth.php');
 session_start();
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['username']) && $_SERVER['REQUEST_METHOD'] == "POST") {
     $username = $_SESSION['username'];
     $title = $_POST['title'];
     $content = $_POST['content'];
