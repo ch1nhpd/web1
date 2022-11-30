@@ -6,7 +6,7 @@
     $stmt = $con->prepare($sql);
     $stmt->execute([$id]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    $_SESSION['token'] = md5(uniqid(mt_rand(), true));
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +22,7 @@
 
     <form class="form" action="action/update_user.php" method="post">
         <h1 class="login-title">User</h1>
+        <input type="hidden" name="token" value="<?php echo $_SESSION['token']?>">
         <input type="hidden" class="login-input" name="id" value="<?php echo $id ?>">
         <input type="text" class="login-input" name="fullname" placeholder="Fullname"
             value="<?php echo $row['fullname'] ?>">

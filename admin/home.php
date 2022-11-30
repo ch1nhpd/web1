@@ -1,5 +1,6 @@
 <?php
 include('./action/home.php');
+$_SESSION['token'] = md5(uniqid(mt_rand(), true));
 ?>
 <!doctype html>
 <html lang="en">
@@ -57,7 +58,7 @@ include('./action/home.php');
                                 <td>' . htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') . '</td>
                                 <td>
                                     <button type="button" class="btn btn-outline-secondary" onclick="location.href=\'./edit_user.php?id=' . $row['id'] . '\'" >Edit</button>
-                                    <button type="button" class="btn btn-outline-danger" onclick="location.href=\'./action/del_user.php?id=' . $row['id'] . '\'">Del</button>
+                                    <button type="button" class="btn btn-outline-danger" onclick="del('.$row['id'].')">Del</button>
                                 </td>
                             </tr>
                             ';
@@ -67,7 +68,18 @@ include('./action/home.php');
             </table>
         </div>
     </div>
-
+    <input type="hidden" id="token" value="<?php echo $_SESSION['token']?>">
+    <script> 
+        function del(id)
+        {
+            var result = confirm("Want to delete?");
+            var token = document.getElementById("token").value;
+            var url = './action/del_user.php?id='.concat(id,"&token=",token);
+            if (result) {
+                location.href=url;
+            }
+        }
+    </script>                   
     <script src="index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"

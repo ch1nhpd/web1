@@ -2,7 +2,9 @@
 include('auth.php');
 include(__DIR__ . '/../../action/connect.php');
 include(__DIR__ . '/../../util/validate.php');
-if (isset($_POST['username'])) {
+include(__DIR__ . '/../../util/csrf.php');
+if (isset($_POST['username'])&&isset($_SESSION['token'])) {
+    is_valid_token('../create_user.php');
     if (!valid_password($_POST['password'])){
         echo "
         <script>
@@ -34,5 +36,11 @@ if (isset($_POST['username'])) {
             </script>";
     }
 } else {
+    echo "
+        <script>
+            alert('Token error!');
+            window.location.href='../home.php';
+        </script>";
 }
+unset($_SESSION['token']);
 ?>

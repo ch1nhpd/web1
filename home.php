@@ -1,7 +1,7 @@
 <?php
 include('./action/auth.php');
 include('./action/home.php');
-
+$_SESSION['token'] = md5(uniqid(mt_rand(), true));
 ?>
 
 <!DOCTYPE html>
@@ -79,6 +79,7 @@ include('./action/home.php');
         <form action="./action/create_status.php" class="form-container" method="post">
             <h1>Create status</h1>
             <label for="email"><b>Title</b></label>
+            <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?>">
             <input type="text" placeholder="Enter Title" name="title" required>
 
             <label for="psw"><b>Content</b></label>

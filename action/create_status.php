@@ -1,8 +1,10 @@
 <?php
 include('./connect.php');
+include(__DIR__ . '/../util/csrf.php');
 // include('./auth.php');
 session_start();
-if (isset($_SESSION['username']) && $_SERVER['REQUEST_METHOD'] == "POST") {
+if (isset($_SESSION['username']) && isset($_SESSION['token'])) {
+    is_valid_token('../home.php');
     $username = $_SESSION['username'];
     $title = $_POST['title'];
     $content = $_POST['content'];
@@ -25,5 +27,12 @@ if (isset($_SESSION['username']) && $_SERVER['REQUEST_METHOD'] == "POST") {
             </script>";
     }
 
+}else {
+    echo "
+        <script>
+            alert('Token error!');
+            window.location.href='../home.php';
+        </script>";
 }
+unset($_SESSION['token']);
 ?>

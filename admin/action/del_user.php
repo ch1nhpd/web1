@@ -1,7 +1,17 @@
 <?php
 include('auth.php');
 include(__DIR__ . '/../../action/connect.php');
-if (isset($_GET['id'])) {
+
+if (isset($_GET['id']) && isset($_GET['token'])) {
+    if($_GET['token']!=$_SESSION['token']){
+        echo "
+        <script>
+            alert('Invalid CSRF token!');
+            window.location.href='../home.php';
+        </script>;
+        ";
+        exit;
+    }
     $id = $_GET['id'];
     try {
         $con->beginTransaction();
@@ -24,5 +34,11 @@ if (isset($_GET['id'])) {
             </script>";
     }
 } else {
+    echo "
+        <script>
+            alert('Token error!');
+            window.location.href='../home.php';
+        </script>";
 }
+unset($_SESSION['token']);
 ?>

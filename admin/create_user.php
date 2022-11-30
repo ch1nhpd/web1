@@ -1,5 +1,6 @@
 <?php
 include('action/auth.php');
+$_SESSION['token'] = md5(uniqid(mt_rand(), true));
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,6 +15,7 @@ include('action/auth.php');
 
     <form class="form" action="action/create_user.php" method="post">
         <h1 class="login-title">User</h1>
+        <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?>">
         <input type="text" class="login-input" name="fullname" placeholder="Fullname">
         <input type="text" class="login-input" name="username" placeholder="Username" required />
         <input type="password" class="login-input" name="password" placeholder="Password">
